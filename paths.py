@@ -1,0 +1,1 @@
+register_button_xpath = "//div[@id='account']/div/button[2]"
