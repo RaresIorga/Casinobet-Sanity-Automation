@@ -10,11 +10,8 @@ import paths
 import pytest
 
 
-global driver
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get("https://www.casinobet.com")
 # Register pop-up functionality test.
-def test_Register_popup():
+def test_register_popup(driver):
     # clicking on register
     register_button = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
     register_button.click()
@@ -52,6 +49,9 @@ def test_Register_popup():
         assert False
     except:
         assert True
+
+
+
 def test_ciorna():
     pass
 

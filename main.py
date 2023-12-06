@@ -9,7 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import pytest
 import paths
 
-from AutomationScripts import RegisterAndLogin as reglog
+from AutomationScripts import register_and_login as reglog
+
 
 @pytest.fixture(scope="module")
 def setup_method():
@@ -23,7 +24,7 @@ def setup_method():
     driver.quit()
 
 
-def test_loginandregistration(setup_method):
+def test_login_and_registration(setup_method):
     print("loginAndRegistration")
     # clicking on register
-    reglog.test_Register_popup(driver)
+    reglog.test_register_popup(driver)
