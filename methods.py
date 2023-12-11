@@ -31,8 +31,7 @@ def login_email(email, password):
         next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
         next.click()
 
-
-def account_registration(driver, username, email, password, country="Romania"):
+def account_registration(driver, username, email, password):
     register_button = WebDriverWait(driver, 200).until(
         EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
     register_button.click()
@@ -49,16 +48,3 @@ def account_registration(driver, username, email, password, country="Romania"):
     # registering the account
     register_button_popup = driver.find_element(By.XPATH, paths.register_button_popup_xpath)
     register_button_popup.click()
-    # selecting the country
-    country_select = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_select_xpath)))
-    country_select.click()
-    country_search = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_search_xpath)))
-    country_search.send_keys(country)
-    country_option_select = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_option_select_xpath)))
-    country_option_select.click()
-    country_submit = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_submit_xpath)))
-    country_submit.click()

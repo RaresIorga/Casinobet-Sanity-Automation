@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import paths
 import pytest
+import methods
 
 
 # Register pop-up functionality test.
@@ -49,6 +50,9 @@ def test_register_popup(driver):
         assert False
     except:
         assert True
+
+def account_verification():
+    methods.login_email("testrares114@gmail.com", "danucapitanu23")
 
 
 
