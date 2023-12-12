@@ -14,10 +14,12 @@ import methods
 # Register pop-up functionality test.
 def test_register_popup(driver):
     # clicking on register
-    register_button = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
+    register_button = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
     register_button.click()
     # Verify that the login button will send the user to the login pop-up.
-    login_btn_popup = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.register_popup_login_xpath)))
+    login_btn_popup = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.register_popup_login_xpath)))
     login_btn_popup.click()
     is_on_login = driver.find_element(By.XPATH, paths.is_login_popup_xpath)
     if is_on_login:
@@ -51,17 +53,21 @@ def test_register_popup(driver):
     except:
         assert True
 
-def account_verification():
-    methods.login_email("testrares114@gmail.com", "danucapitanu23")
 
+def account_verification(driver):
+    # switching to a new tab
+    driver.execute_script("window.open('');")
+    driver.switch_to_window(1)
+    # logging into the email
+    methods.switch_to_email(driver, "testrares114@gmail.com", "danucapitanu23")
+    driver.execute_script("window.open('');")
+    driver.switch_to_window(2)
+    methods.switch_to_email(driver, "testrares114@gmail.com", "danucapitanu23")
+    # searching and verifying the casinobet email
+    casinobet_email = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.gmail_casinobet_verification)))
+    casinobet_email.click()
 
 
 def test_ciorna():
     pass
-
-
-
-
-    
-
-

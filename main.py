@@ -10,6 +10,7 @@ import pytest
 import paths
 import methods
 import time
+from seleniumbase import SB
 
 from AutomationScripts import register_and_login as reglog
 
@@ -18,21 +19,24 @@ from AutomationScripts import register_and_login as reglog
 def setup_method():
     # Setup operations
     print("Starting")
-    global driver
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    driver.get("https://www.casinobet.com")
-    yield driver
-    time.sleep(60)
-    print("Ending")
-    driver.quit()
+    with SB(uc=True) as driver:
+        # global driver
+        # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver.get("https://www.casinobet.com")
+        yield driver
+        time.sleep(60)
+        print("Ending")
+        driver.quit()
 
 
 def test_login_and_registration(setup_method):
     print("loginAndRegistration")
+    driver = setup_method
     # clicking on register
     reglog.test_register_popup(driver)
 
-def test_account_verification(setup_method):
-    methods.account_registration(driver, "TestRares1112I01", "testrares114@gmail.com", "211RaresTest")
 
-    pass
+def test_account_verification(setup_method):
+    driver = setup_method
+    # methods.account_registration(driver, "TestRares1112I01", "testrares114@gmail.com", "211RaresTest")
+    reglog.account_verification(driver)
