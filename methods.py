@@ -26,14 +26,13 @@ def switch_to_email(driver, email, password):
             email_textbox.send_keys(email)
             next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
             next.click()
-            time.sleep(10)
+            #time.sleep(10)
             password_textbox = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_password_textbox)))
             password_textbox.send_keys(password)
             next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
             next.click()
         except:
-            time.sleep(60)
-
+            time.sleep(10)
 
 
 def account_registration(driver, username, email, password, country="Romania"):
@@ -66,3 +65,18 @@ def account_registration(driver, username, email, password, country="Romania"):
     country_submit = WebDriverWait(driver, 200).until(
         EC.presence_of_element_located((By.XPATH, paths.country_submit_xpath)))
     country_submit.click()
+
+
+def login(driver, username, password):
+    login_button = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.login_button)))
+    login_button.click()
+    login_username = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.login_username)))
+    login_username.send_keys(username)
+    login_password = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.login_password)))
+    login_password.send_keys(password)
+    login_submit = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.login_submit)))
+    login_submit.click()

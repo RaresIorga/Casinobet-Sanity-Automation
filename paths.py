@@ -1,6 +1,7 @@
 # header
 register_button_xpath = "//div[@id='account']/div/button[2]"
 avatar_xpath = "//div[@id='account']/div/button"
+
 # registration pop-up
 register_popup_login_xpath = ('//div[@class="modal-content custom-modal  "]//div[@class="modal-body"]//button[text('
                               ')="Login"]')
@@ -12,6 +13,12 @@ register_email = "//input[@placeholder = 'Email address']"
 register_password = "//input[@placeholder = 'Password']"
 register_checkbox = "//div[contains(@class, 'CheckBox')]//label"
 register_button_popup_xpath = "//form/button/span[contains(text(), 'Register')]/.."
+
+# login
+login_button = "//span[text()='Login']/.."
+login_username = "//input[@name='username']"
+login_password = "//input[@name='password']"
+login_submit = "//button[@type='submit']"
 
 # country
 country_select_xpath = "//div[text() = 'Select your country']"
@@ -28,13 +35,16 @@ settings_verification = "//span[text()='Verification']/.."
 # Verification
 verification_code = "//input[@name = 'pin-field']"
 verification_send = "//span[text()= 'Send']/.."
+verification_request_another_code = "//span[text()= 'request another code']"
+verification_specify_another_email = "//span[text()= 'specify another email']"
+verification_another_email_input = "//input[@type = 'email']"
 
 # Gmail Access
 gmail_is_signed = "//span[text()='Sign in']"
-# google_reject_cookies = "//div[text() = 'Reject all']//parent::*"
-# google_signin = "//a[@aria-label = 'Sign in']"
 gmail_email_textbox = "//input[@type = 'email']"
 gmail_password_textbox = "//input[@type= 'password']"
 gmail_next_btn = "//span[text() = 'Next']"
 gmail_nu_acum = "//span[text() = 'Nu acum']"
-gmail_casinobet_verification = "//div[contains(text(), 'CasinoBet')]"
+# gmail_casinobet_verification = "//div[contains(text(), 'CasinoBet')]"
+gmail_casinobet_verification = "//span[text() = 'Verify your email address']/../../.."
+gmail_casinobet_verification_code = "//span[@class='im']/following-sibling::b"

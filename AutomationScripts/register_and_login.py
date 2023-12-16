@@ -9,6 +9,7 @@ import time
 import paths
 import pytest
 import methods
+import re
 
 
 # Register pop-up functionality test.
@@ -54,19 +55,69 @@ def test_register_popup(driver):
         assert True
 
 
-def account_verification(driver):
+def account_verification(driver, get_verification_code=0, email="testrares114@gmail.com", password="danucapitanu23"):
+    # if get_verification_code is 1 then the method will return the verification code extracted from the email.
     # switching to a new tab
     driver.execute_script("window.open('');")
-    driver.switch_to_window(1)
+    num_tabs = len(driver.driver.window_handles)
+    driver.switch_to_window(num_tabs-1)
     # logging into the email
-    methods.switch_to_email(driver, "testrares114@gmail.com", "danucapitanu23")
-    driver.execute_script("window.open('');")
-    driver.switch_to_window(2)
-    methods.switch_to_email(driver, "testrares114@gmail.com", "danucapitanu23")
-    # searching and verifying the casinobet email
-    casinobet_email = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.gmail_casinobet_verification)))
-    casinobet_email.click()
+    methods.switch_to_email(driver, email, password)
+    # searching and verifying if the casinobet email has been sent
+    try:
+        casinobet_email = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.gmail_casinobet_verification)))
+        # clicking on the email and extracting the verification code
+        casinobet_email.click()
+        if get_verification_code == 1:
+            email_verification_code = WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.XPATH, paths.gmail_casinobet_verification_code)))
+            verification_code_raw = email_verification_code.get_attribute("innerHTML")
+            verification_code_numbers = re.findall(r'\d+', verification_code_raw)
+            return verification_code_numbers
+        driver.switch_to_window(0)
+    except:
+        print("Verification Email has not been found")
+        assert False
+
+def settings_verification(driver):
+    # clicking on profile
+    header_profile = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.avatar_xpath)))
+    header_profile.click()
+    # clicking on settings
+    settings = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.profile_settings)))
+    settings.click()
+    # clicking on verification
+    verification = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.settings_verification)))
+    verification.click()
+    # Verify that the “Send” button is not available.
+    send_buton = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_send)))
+    if send_buton.is_enabled():
+        assert False
+    # Verify that the user cannot verify his email with the wrong code.
+    verification_code_digits_number = 7
+    for i in range(1, verification_code_digits_number):
+        verification_code_input = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_code+f"[{i}]")))
+        verification_code_input.send_keys("0")
+    send_buton.click()
+    time.sleep(2)
+    # Verify that the send again button works as intended.
+    send_another_code = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_request_another_code)))
+    send_another_code.click()
+    time.sleep(5)
+    account_verification(driver)
+    # Verify that the change email button works as intended.
+    change_email = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_specify_another_email)))
+    change_email.click()
+    another_email_input = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_another_email_input)))
+    another_email = "testrares112@gmail.com"
+    another_email_input.send_keys(another_email)
+    send_buton = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_send)))
+    send_buton.click()
+    # Switching to another email to check if the change email process has started
+
+
+
 
 
 def test_ciorna():
