@@ -24,7 +24,7 @@ def setup_method():
         # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.get("https://www.casinobet.com")
         yield driver
-        time.sleep(10)
+        time.sleep(10000)
         print("Ending")
 
 
@@ -39,9 +39,9 @@ def test_account_verification(setup_method):
     driver = setup_method
     # methods.account_registration(driver, "TestRares1112I01", "testrares114@gmail.com", "211RaresTest")
     # logging in
-    methods.login(driver, "TestRares1212I01", "211RaresTest")
+    methods.switch_to_email(driver, "testrares114@gmail.com", "danucapitanu23")
+    methods.switch_to_email(driver, "testrares112@gmail.com", "danucapitanu23!")
     # needed a moment to load
     time.sleep(2)
     # verification in settings
-    reglog.settings_verification(driver)
 

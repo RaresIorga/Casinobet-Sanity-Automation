@@ -19,20 +19,57 @@ def siteAccess():
 
 
 def switch_to_email(driver, email, password):
+    # switching to a new tab and entering gmail
+    driver.execute_script("window.open('');")
+    num_tabs = len(driver.driver.window_handles)
+    driver.switch_to_window(num_tabs - 1)
+    driver.get("https://www.gmail.com")
+    # verifying if the user is already logger in with the correct account
+    try:
+        # is_signed_in will search for the "Sign In" message at the login window"
+        is_signed_in = WebDriverWait(driver, 60).until(
+            EC.presence_of_element_located((By.XPATH, paths.gmail_is_signed)))
+        email_textbox = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.gmail_email_textbox)))
+        email_textbox.send_keys(email)
+        next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
+        next.click()
+        password_textbox = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.gmail_password_textbox)))
+        password_textbox.send_keys(password)
+        next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
+        next.click()
+    except:
+        # if the user is signed in, it will verify that he is logged in with the correct account
         try:
-            driver.get("https://www.gmail.com")
-            is_signed_in = WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, paths.gmail_is_signed)))
-            email_textbox = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_email_textbox)))
+            same_account_verify = WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.XPATH, paths.get_path_gmail_account(email))))
+        except:
+            # if not, the account will be changed
+            gmail_account_button = WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.XPATH, paths.gmail_account_button)))
+            gmail_account_button.click()
+            iframe = WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.XPATH, paths.gmail_account_iframe)))
+            time.sleep(2)
+            driver.switch_to_frame(iframe)
+            gmail_add_another_account = WebDriverWait(driver, 500).until(
+                EC.presence_of_element_located((By.XPATH, paths.gmail_add_another_acount)))
+            gmail_add_another_account.click()
+            # selecting the latest tab
+            driver.switch_to_window(num_tabs)
+            email_textbox = WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.XPATH, paths.gmail_email_textbox)))
             email_textbox.send_keys(email)
             next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
             next.click()
-            #time.sleep(10)
-            password_textbox = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_password_textbox)))
+            password_textbox = WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.XPATH, paths.gmail_password_textbox)))
             password_textbox.send_keys(password)
             next = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.gmail_next_btn)))
             next.click()
-        except:
-            time.sleep(10)
+
+
 
 
 def account_registration(driver, username, email, password, country="Romania"):

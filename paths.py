@@ -48,3 +48,11 @@ gmail_nu_acum = "//span[text() = 'Nu acum']"
 # gmail_casinobet_verification = "//div[contains(text(), 'CasinoBet')]"
 gmail_casinobet_verification = "//span[text() = 'Verify your email address']/../../.."
 gmail_casinobet_verification_code = "//span[@class='im']/following-sibling::b"
+# Paths for verifying if it's the correct account
+gmail_account_button = "//a[contains(@aria-label, 'Google Account')]"
+gmail_account_iframe = "//iframe[@name = 'account']"
+gmail_add_another_acount = "//div[contains(text(), 'Add account')]"
+
+
+def get_path_gmail_account(email):
+    return f"//a[contains(@aria-label, '{email}')]"

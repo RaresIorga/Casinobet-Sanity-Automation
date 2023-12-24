@@ -57,10 +57,6 @@ def test_register_popup(driver):
 
 def account_verification(driver, get_verification_code=0, email="testrares114@gmail.com", password="danucapitanu23"):
     # if get_verification_code is 1 then the method will return the verification code extracted from the email.
-    # switching to a new tab
-    driver.execute_script("window.open('');")
-    num_tabs = len(driver.driver.window_handles)
-    driver.switch_to_window(num_tabs-1)
     # logging into the email
     methods.switch_to_email(driver, email, password)
     # searching and verifying if the casinobet email has been sent
