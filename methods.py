@@ -70,8 +70,6 @@ def switch_to_email(driver, email, password):
             next.click()
 
 
-
-
 def account_registration(driver, username, email, password, country="Romania"):
     register_button = WebDriverWait(driver, 200).until(
         EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
@@ -105,15 +103,38 @@ def account_registration(driver, username, email, password, country="Romania"):
 
 
 def login(driver, username, password):
-    login_button = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.login_button)))
-    login_button.click()
-    login_username = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.login_username)))
-    login_username.send_keys(username)
-    login_password = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.login_password)))
-    login_password.send_keys(password)
-    login_submit = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.login_submit)))
-    login_submit.click()
+    try:
+        login_button = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.login_button)))
+        login_button.click()
+        login_username = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.login_username)))
+        login_username.send_keys(username)
+        login_password = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.login_password)))
+        login_password.send_keys(password)
+        login_submit = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.login_submit)))
+        login_submit.click()
+        time.sleep(5)
+    except:
+        print("Already logged in")
+
+
+def logout(driver):
+    try:
+        login = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.login_button)))
+        print("Already logged out")
+    except:
+        try:
+            avatar = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.avatar_xpath)))
+            avatar.click()
+        except:
+            pass
+        logout_btn = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.logout_button)))
+        logout_btn.click()
+        print("Clicked the log out button")
+        got_it_btn = WebDriverWait(driver, 200).until(EC.element_to_be_clickable((By.XPATH, paths.got_it)))
+        # using javascript to click the button
+        driver.execute_script("arguments[0].click();", got_it_btn)

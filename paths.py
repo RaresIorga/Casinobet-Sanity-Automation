@@ -20,6 +20,11 @@ login_username = "//input[@name='username']"
 login_password = "//input[@name='password']"
 login_submit = "//button[@type='submit']"
 
+# logout
+logout_button = "//button[text() = 'Logout']"
+got_it = "//span[text()='Got it']"
+
+
 # country
 country_select_xpath = "//div[text() = 'Select your country']"
 country_search_xpath = "//input[@type = 'text']"
@@ -38,6 +43,7 @@ verification_send = "//span[text()= 'Send']/.."
 verification_request_another_code = "//span[text()= 'request another code']"
 verification_specify_another_email = "//span[text()= 'specify another email']"
 verification_another_email_input = "//input[@type = 'email']"
+back_button = "//button[contains(@class, 'back-btn')]"
 
 # Gmail Access
 gmail_is_signed = "//span[text()='Sign in']"
@@ -45,9 +51,10 @@ gmail_email_textbox = "//input[@type = 'email']"
 gmail_password_textbox = "//input[@type= 'password']"
 gmail_next_btn = "//span[text() = 'Next']"
 gmail_nu_acum = "//span[text() = 'Nu acum']"
-# gmail_casinobet_verification = "//div[contains(text(), 'CasinoBet')]"
 gmail_casinobet_verification = "//span[text() = 'Verify your email address']/../../.."
-gmail_casinobet_verification_code = "//span[@class='im']/following-sibling::b"
+gmail_casinobet_verification_code = "//table//p[contains(., 'Verification code:')]//b"
+gmail_request_change_email = "//span[text() = 'Request to change your email address']"
+
 # Paths for verifying if it's the correct account
 gmail_account_button = "//a[contains(@aria-label, 'Google Account')]"
 gmail_account_iframe = "//iframe[@name = 'account']"
