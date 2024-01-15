@@ -46,20 +46,26 @@ def register_popup(driver):
     # Verify that the checkbox with the terms and conditions can be checked.
     register_checkbox = driver.find_element(By.XPATH, paths.register_checkbox)
     register_checkbox.click()
-    # Verify that the Register button is not available until all the textboxes have been completed and the checkbox is checked.
+    register_checkbox.click()
+    # Verify that the Register button is not available until all the textboxes have been completed and the checkbox
+    # is checked.
     register_button_popup = driver.find_element(By.XPATH, paths.register_button_popup_xpath)
     try:
-        register_button_popup.click()
+        register_button_popup_clickable = WebDriverWait(driver, 5).until(EC.element_to_be_clickable(
+            (By.XPATH, paths.register_button_popup_xpath)))
         assert False
     except:
         assert True
+    x_button = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.x_button)))
+    x_button.click()
 
 
-def account_verification(driver, get_verification_code=0, email="testrares114@gmail.com", password="danucapitanu23"):
+def account_verification(driver, email, password,get_verification_code=0):
     # if get_verification_code is 1 then the method will return the verification code extracted from the email.
     # logging into the email
     methods.switch_to_email(driver, email, password)
     # searching and verifying if the casinobet email has been sent
+    time.sleep(5)
     try:
         casinobet_email = WebDriverWait(driver, 200).until(
             EC.presence_of_element_located((By.XPATH, paths.gmail_casinobet_verification)))
@@ -77,7 +83,7 @@ def account_verification(driver, get_verification_code=0, email="testrares114@gm
     driver.switch_to_window(0)
 
 
-def settings_verification(driver, second_email="testrares112@gmail.com", second_password="danucapitanu23!"):
+def settings_verification(driver, email, password, change_to_email, second_email, second_password):
     # clicking on profile
     header_profile = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.avatar_xpath)))
     header_profile.click()
@@ -105,14 +111,14 @@ def settings_verification(driver, second_email="testrares112@gmail.com", second_
         EC.presence_of_element_located((By.XPATH, paths.verification_request_another_code)))
     send_another_code.click()
     time.sleep(5)
-    account_verification(driver)
+    account_verification(driver, email, password)
     # Verify that the change email button works as intended.
     change_email = WebDriverWait(driver, 200).until(
         EC.presence_of_element_located((By.XPATH, paths.verification_specify_another_email)))
     change_email.click()
     another_email_input = WebDriverWait(driver, 200).until(
         EC.presence_of_element_located((By.XPATH, paths.verification_another_email_input)))
-    another_email_input.send_keys(second_email)
+    another_email_input.send_keys(change_to_email)
     send_buton = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_send)))
     send_buton.click()
     # Switching to email window to see if I receive the "Verify your email" on the new email
@@ -126,13 +132,22 @@ def settings_verification(driver, second_email="testrares112@gmail.com", second_
     verification_code_input.send_keys(verification_code_int)
     send_buton = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.verification_send)))
     send_buton.click()
+    x_button = WebDriverWait(driver, 200).until(EC.presence_of_element_located((By.XPATH, paths.settings_x_button)))
+    x_button.click()
 
 
 def password_verification(driver, username="TestRares1212I01", password="TestRares1212I01"):
-    methods.login(driver, )
+    pass
 
 
 def test_ciorna(driver, first_email="testrares114@gmail.com", second_email="testrares112@gmail.com",
                 password="danucapitanu23!"):
-    # Switching to email window to see if I receive the "Request to change your email address" on the original email
-    verification_code = account_verification(driver, get_verification_code=1, email=second_email, password=password)
+    register_button = WebDriverWait(driver, 200).until(
+        EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
+    register_button.click()
+    try:
+        register_button_popup_clickable = WebDriverWait(driver, 5).until(EC.element_to_be_clickable(
+            (By.XPATH, paths.register_button_popup_xpath)))
+        assert False
+    except:
+        assert True

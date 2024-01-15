@@ -13,6 +13,7 @@ register_email = "//input[@placeholder = 'Email address']"
 register_password = "//input[@placeholder = 'Password']"
 register_checkbox = "//div[contains(@class, 'CheckBox')]//label"
 register_button_popup_xpath = "//form/button/span[contains(text(), 'Register')]/.."
+x_button = "//button[@class='auth-exit']"
 
 # login
 login_button = "//span[text()='Login']/.."
@@ -36,6 +37,8 @@ profile_settings = "//button[text()='Settings']"
 
 # Settings
 settings_verification = "//span[text()='Verification']/.."
+settings_x_button = ("//button[@class='p-2 fill-icon1 hover:fill-icon-active1 inline-flex']/*[local-name()='svg' and "
+            "namespace-uri()='http://www.w3.org/2000/svg']")
 
 # Verification
 verification_code = "//input[@name = 'pin-field']"

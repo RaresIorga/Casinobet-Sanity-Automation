@@ -71,9 +71,12 @@ def switch_to_email(driver, email, password):
 
 
 def account_registration(driver, username, email, password, country="Romania"):
-    register_button = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
-    register_button.click()
+    try:
+        register_button = WebDriverWait(driver, 200).until(
+            EC.presence_of_element_located((By.XPATH, paths.register_button_xpath)))
+        register_button.click()
+    except:
+        pass
     # finding the textbox
     register_username = driver.find_element(By.XPATH, paths.register_username)
     register_email = driver.find_element(By.XPATH, paths.register_email)
@@ -83,23 +86,26 @@ def account_registration(driver, username, email, password, country="Romania"):
     register_email.send_keys(email)
     register_password.send_keys(password)
     register_checkbox = driver.find_element(By.XPATH, paths.register_checkbox)
-    register_checkbox.click()
+    if register_checkbox.is_selected():
+        pass
+    else:
+        register_checkbox.click()
     # registering the account
     register_button_popup = driver.find_element(By.XPATH, paths.register_button_popup_xpath)
     register_button_popup.click()
-    # selecting the country
-    country_select = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_select_xpath)))
-    country_select.click()
-    country_search = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_search_xpath)))
-    country_search.send_keys(country)
-    country_option_select = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_option_select_xpath)))
-    country_option_select.click()
-    country_submit = WebDriverWait(driver, 200).until(
-        EC.presence_of_element_located((By.XPATH, paths.country_submit_xpath)))
-    country_submit.click()
+    # selecting the country - the pop-up was removed for now
+    # country_select = WebDriverWait(driver, 200).until(
+    #     EC.presence_of_element_located((By.XPATH, paths.country_select_xpath)))
+    # country_select.click()
+    # country_search = WebDriverWait(driver, 200).until(
+    #     EC.presence_of_element_located((By.XPATH, paths.country_search_xpath)))
+    # country_search.send_keys(country)
+    # country_option_select = WebDriverWait(driver, 200).until(
+    #     EC.presence_of_element_located((By.XPATH, paths.country_option_select_xpath)))
+    # country_option_select.click()
+    # country_submit = WebDriverWait(driver, 200).until(
+    #     EC.presence_of_element_located((By.XPATH, paths.country_submit_xpath)))
+    # country_submit.click()
 
 
 def login(driver, username, password):
