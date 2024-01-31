@@ -14,14 +14,14 @@ from seleniumbase import SB
 
 from AutomationScripts import register_and_login as reglog
 
-username = "TestRaresAuto10"
-password = "211RaresTest"
-register_email = f"testrares114+{username}@gmail.com"
-change_to_email = f"testrares112+{username}@gmail.com"
-email = "testrares114@gmail.com"
-email_password = "danucapitanu23"
-second_email = "testrares112@gmail.com"
-second_email_password = "danucapitanu23!"
+username = "Username"
+password = "password"
+register_email = f"mail+{username}@gmail.com"
+change_to_email = f"mail+{username}@gmail.com"
+email = "email1"
+email_password = "email_password"
+second_email = "second_email"
+second_email_password = "second_email_password"
 @pytest.fixture(scope="module")
 def setup_method():
     # Setup operations
@@ -29,8 +29,6 @@ def setup_method():
     with SB(uc=True) as driver:
         driver.get("https://www.casinobet.com")
         yield driver
-        # time sleep needs to be removed at the end
-        time.sleep(10000)
         print("Ending")
 
 
