@@ -47,8 +47,3 @@ def test_account(setup_method):
     # verifying everything settings related
     reglog.settings_verification(driver, email=email, password=email_password, change_to_email=change_to_email,
                                  second_email=second_email, second_password=second_email_password)
-
-
-# def test_ciorna(setup_method):
-#     driver = setup_method
-#     reglog.test_ciorna(driver)
